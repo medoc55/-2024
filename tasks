@@ -1,0 +1,82 @@
+using System;
+using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
+
+namespace ConsoleApp5
+{
+    class Task
+    {
+        private string textTask;
+        private int numTask;
+
+        public Task(string textTask, int numTask)
+        {
+            this.textTask = textTask;
+            this.numTask = numTask;
+        }
+        public string TextTask { get { return textTask; } }
+        public int NumTask { get { return numTask; } }
+    }
+
+    class TaskManager
+    {
+        private List<Task> listTasks = new List<Task>();
+
+        public void AddTask(Task task)
+        {
+            listTasks.Add(task);
+        }
+
+        public void DeleteTask(int taskNum)
+        {
+            Task taskToDelete = listTasks.Find(x => x.NumTask == taskNum);
+            listTasks.Remove(taskToDelete);
+        }
+
+        public void ShowTask()
+        {
+            foreach (var task in listTasks)
+            {
+                Console.WriteLine($"{task.TextTask} {task.NumTask}");
+            }
+        }
+    }
+
+    class UKV
+    {
+
+        static void Main(string[] args)
+        {
+            TaskManager manager = new TaskManager();
+            while (true)
+            {
+                Console.Write("Введите команду: ");
+                string command = Console.ReadLine();
+                if (command == "exit")
+                {
+                    break;
+                    break;
+                }
+                else if (command == "add")
+                {
+                    Console.Write("Введите название задачи: ");
+                    string text = Console.ReadLine();
+                    Console.Write("Введите номер задачи: ");
+                    int num = Convert.ToInt32(Console.ReadLine());
+                    Task task = new Task(text, num);
+                    manager.AddTask(task);
+                }
+                else if (command == "delete")
+                {
+                    int numToDelete = Convert.ToInt32(Console.ReadLine());
+                    Console.Write("Введите номер задачи: ");
+                    manager.DeleteTask(numToDelete);
+                }
+                else if (command == "list")
+                {
+                    manager.ShowTask();
+                }
+            }
+        }
+    }
+}
